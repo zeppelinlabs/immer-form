@@ -24,7 +24,7 @@ jobs:
       - run: yarn run generate-pack
       - run: yarn publish
         working-directory: ./immer-form/dist
-      - run: npm publish
+      - run: yarn publish --verbose
         env:
           NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}
 
@@ -45,7 +45,7 @@ jobs:
       - run: yarn install
       - run: yarn run build
       - run: yarn run generate-pack
-      - run: yarn publish
+      - run: yarn publish --verbose
         working-directory: ./immer-form/dist
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
