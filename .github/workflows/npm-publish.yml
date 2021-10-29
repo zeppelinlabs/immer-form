@@ -21,7 +21,7 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: yarn install
       - run: yarn run build
-      - run: yarn run generate-pack
+      - run: yarn run generate-package-json
       - run: yarn publish --verbose
         working-directory: ./immer-form/dist
         env:
