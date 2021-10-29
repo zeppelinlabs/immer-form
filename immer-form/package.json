@@ -1,6 +1,6 @@
 {
   "name": "immer-form",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "GPL-3.0",
   "main": "./index.js",
   "types": "./index.d.ts",
@@ -25,7 +25,7 @@
     }
   },
   "scripts": {
-    "generate-pack": "node ./scripts/CopyPackageToDist && cd dist && yarn pack",
+    "generate-package-json": "node ./scripts/CopyPackageToDist",
     "build-w": "tsc -w",
     "build": "tsc"
   }
