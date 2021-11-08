@@ -167,7 +167,7 @@ export const useImmerForm = <T,>(p: {
         } finally {
             if (isMounted()) {
                 if (state.current.shouldResetAfterSubmitt) {
-                    reset()
+                    _reset()
                 } else {
                     setFormState(produce(s => {
                         s.loadingSubmit = false
@@ -184,7 +184,11 @@ export const useImmerForm = <T,>(p: {
 
     // console.log("Form", state, validations.getErrors(), validations, formState)
 
-
+    const _reset = ()=>{
+        setState(getDefaults(p.defaults))
+        validations.triggerValidation(true)
+        setFormState(defaultFormState)
+    }
 
     const reset = useCallback(() => {
         if (currentFormState.current.loadingSubmit) {
@@ -192,9 +196,7 @@ export const useImmerForm = <T,>(p: {
                 sd.shouldResetAfterSubmitt = true
             }))
         } else {
-            setState(getDefaults(p.defaults))
-            validations.triggerValidation(true)
-            setFormState(defaultFormState)
+            _reset()
         }
     }, [defaultFormState,])
 
