@@ -40,8 +40,8 @@ type ConnectProps<P, V, F, K> =
         attr: K,
     }
 
-const useSyncErrorsWithBrowser = <T,>(params: { token: TokenLive<T>, }) => {
-    const ref = useRef<HTMLRef>()
+const useSyncErrorsWithBrowser = <R extends HTMLRef,>(params: { token: TokenLive<unknown>, }) => {
+    const ref = useRef<R>(null)
 
     const depsCallback = useCallback(() => {
         const errorsToShow
