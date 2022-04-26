@@ -184,7 +184,7 @@ export const useImmerForm = <T,>(p: {
 
     // console.log("Form", state, validations.getErrors(), validations, formState)
 
-    const _reset = ()=>{
+    const _reset = () => {
         setState(getDefaults(p.defaults))
         validations.triggerValidation(true)
         setFormState(defaultFormState)
@@ -227,12 +227,15 @@ export const useImmerForm = <T,>(p: {
                 const submitted = currentFormState.current.submitCount > 0
                 const changesAllowSubmit
                     = p.allowSubmitWithoutChanges || validations.getHasChanges()
+                const loading = currentFormState.current.loadingSubmit
                 const submittable
-                    = changesAllowSubmit && (!submitted || !validations.getHasErrors())
+                    = changesAllowSubmit
+                    && (!submitted || !validations.getHasErrors())
+                    && !loading
                 return {
                     valid: !validations.getHasErrors(),
                     submitted,
-                    loading: currentFormState.current.loadingSubmit,
+                    loading,
                     submittable,
                     hasChanges: validations.getHasChanges(),
                 }
