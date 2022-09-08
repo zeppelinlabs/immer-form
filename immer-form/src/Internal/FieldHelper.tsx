@@ -14,7 +14,7 @@ type HTMLRef = { setCustomValidity: HTMLInputElement["setCustomValidity"], }
 type Props<T> = {
     value: T,
     onChange?: (v: T) => void,
-    onBlur?: (_?: string) => void,
+    onBlur?: () => void,
     errorMessage?: string | null,
     disabled?: boolean,
     ref?: React.Ref<HTMLRef>,
