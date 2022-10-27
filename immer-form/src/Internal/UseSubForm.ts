@@ -180,7 +180,7 @@ const useTokenGetter = <
         }
     }, [subToken,])
 
-    return <K extends keyof KeyTokens<R> & keyof R & keyof Draft<R>>
+    return <K extends Exclude<keyof KeyTokens<R> & keyof R & keyof Draft<R>, symbol>>
         (k: K, key?: string | number): KeyTokens<R>[typeof k] => {
         const cacheKey = `${k}--${key || ""}`
 
