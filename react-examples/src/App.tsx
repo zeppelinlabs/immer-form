@@ -1,109 +1,42 @@
 import React from 'react';
-import {
-  SubmitHandler,
-  useField,
-  useImmerFormYup,
-  useSyncErrorsWithBrowser
-} from "immer-form/Validators/YupValidator";
-import * as yup from 'yup';
-
-type FormExample = {
-  name: string,
-  age: number,
-}
-
-const useFormValidation = () => {
-  const schema: yup.SchemaOf<FormExample> = yup.object().shape({
-    name: yup.string().required(),
-    age: yup.number().required(),
-  })
-  return schema
-}
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import BasicFormExample from './pages/BasicFormExample/BasicFormExample';
+import ExampleIndex from './pages/ExampleIndex/ExampleIndex';
+import { Paths } from './pages/Paths';
+import UseDebugExample from './pages/UseDebugExample/UseDebugExample';
+import UseImmerFormExample from './pages/UseImmerFormExample/UseImmerFormExample';
+import UseImmerFormYupExample from './pages/UseImmerFormYupExample/UseImmerFormYupExample';
+import UseSubFormErrorExample from './pages/UseSubFormErrorExample/UseSubFormErrorExample';
+import UseSubFormExample from './pages/UseSubFormExample/UseSubFormExample';
+import UseTokenExample from './pages/UseTokenExample/UseTokenExample';
+import UseWatchExample from './pages/UseWatchExample/UseWatchExample';
+import { GlobalStyled } from "../src/styles/globalStyled"
+import { ResetStyled } from "./styles/resetStyled"
+import { ThemeProvider } from "styled-components"
+import { defaultTheme } from "./styles/defaultTheme"
+import UseFieldExample from './pages/UseFieldExample/UseFieldExample';
 
 const App = () => {
 
-  const getDefaultValues = () => {
-    return {
-      name: "Mary",
-      age: 25
-    }
-  }
-
-  const {
-    token,
-    handleSubmit,
-    formState: {
-      submittable,
-    },
-  }
-    = useImmerFormYup<FormExample>({
-      defaults: getDefaultValues(),
-      validator: useFormValidation(),
-    })
-
-  const {
-    value: nameValue,
-    onChange: onNameChange,
-    onBlur: onNameBlur,
-    subToken: nameToken,
-  } = useField({ token: token, attr: "name" })
-
-  const {
-    value: ageValue,
-    onChange: onAgeChange,
-    onBlur: onAgeBlur,
-    subToken: ageToken,
-  } = useField({ token: token, attr: "age" })
-
-  const refName = useSyncErrorsWithBrowser<HTMLInputElement>({ token: nameToken, })
-  const refAge = useSyncErrorsWithBrowser<HTMLInputElement>({ token: ageToken, })
-
-  const onSubmit: SubmitHandler<FormExample> = async (submitObject) => {
-    await alert(`Submitted: ${submitObject.name} - ${submitObject.age}`)
-  }
-
-  return (<div>
-    <div className="container">
-      <div>
-        <h1>Change me<h1 className={"exclamation"}>!</h1></h1>
-      </div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <p>
-          <label htmlFor="name">
-            Name:
-          </label>
-          <input
-            id="name"
-            type="text"
-            value={nameValue}
-            onChange={(e) => onNameChange(e.target.value)}
-            onBlur={onNameBlur}
-            ref={refName}
-          />
-
-        </p>
-        <p>
-          <label htmlFor="age">
-            Age:
-          </label>
-          <input
-            id="age"
-            type="text"
-            value={ageValue}
-            onChange={(e) => onAgeChange(Number(e.target.value))}
-            onBlur={onAgeBlur}
-            ref={refAge}
-          />
-
-        </p>
-        <br />
-        <button
-          disabled={!submittable}
-          type="submit">Submit</button>
-      </form>
-    </div>
-  </div>
-  );
+  return <ThemeProvider theme={defaultTheme}>
+    <ResetStyled />
+    <GlobalStyled />
+    <BrowserRouter>
+      <Routes>
+        <Route path={Paths.home} element={<ExampleIndex />} />
+        <Route path={Paths.basicFormExample} element={<BasicFormExample />} />
+        <Route path={Paths.useImmerForm} element={<UseImmerFormExample />} />
+        <Route path={Paths.useImmerFormYup} element={<UseImmerFormYupExample />} />
+        <Route path={Paths.useToken} element={<UseTokenExample />} />
+        <Route path={Paths.useWatch} element={<UseWatchExample />} />
+        <Route path={Paths.useSubForm} element={<UseSubFormExample />} />
+        <Route path={Paths.useSubFormError} element={<UseSubFormErrorExample />} />
+        <Route path={Paths.useDebug} element={<UseDebugExample />} />
+        <Route path={Paths.useField} element={<UseFieldExample />} />
+        <Route path="/" element={<Navigate to={Paths.home} replace />} />
+      </Routes>
+    </BrowserRouter>
+  </ThemeProvider>
 }
 
 export default App;

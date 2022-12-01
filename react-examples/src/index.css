@@ -30,6 +30,7 @@ input {
 
 p {
   display:table-row;
+  margin: 20px;
 }
 
 label {
